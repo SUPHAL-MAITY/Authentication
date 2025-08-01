@@ -1,11 +1,14 @@
 
 import express from "express"
 import { connectDb } from "./db/connectDb"
-import { getUserController } from "./controller/user.controller";
+import { getUserController, registerController } from "./controller/user.controller";
 
 
 
 const app=express()
+
+app.use(express.json())
+
 
 connectDb();
 
@@ -15,6 +18,9 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/user",getUserController)
+
+
+app.post("/register",registerController)
 
 
 app.listen(3000,()=>{
