@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 });
 app.get("/user", user_controller_1.getUserController);
 app.post("/register", user_controller_1.registerController);
+app.post("/login", user_controller_1.loginController);
 app.listen(3000, () => {
     console.log("app is listening at port 3000");
 });

@@ -1,7 +1,7 @@
 
 import express from "express"
 import { connectDb } from "./db/connectDb"
-import { getUserController, registerController } from "./controller/user.controller";
+import { getUserController, loginController, registerController } from "./controller/user.controller";
 
 
 
@@ -21,6 +21,7 @@ app.get("/user",getUserController)
 
 
 app.post("/register",registerController)
+app.post("/login",loginController)
 
 
 app.listen(3000,()=>{
