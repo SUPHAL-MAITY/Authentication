@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginController = exports.registerController = exports.getUserController = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const User_types_1 = require("../Types/User.types");
 const User_schema_1 = require("../Schema/User.schema");
 const secret = "djfo99349";
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
@@ -33,7 +34,11 @@ const getUserController = (req, res) => {
 };
 exports.getUserController = getUserController;
 const registerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, email, password } = req.body;
+    const result = User_types_1.userInputSchema.safeParse(req.body);
+    if (!result.success) {
+        return res.status(400).json({ message: "user input is not  valid", errors: result.error.issues });
+    }
+    const { name, email, password } = result.data;
     console.log(name, email, password);
     try {
         const existedUser = yield User_schema_1.User.findOne({ email });

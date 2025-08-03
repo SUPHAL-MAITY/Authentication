@@ -1,6 +1,7 @@
 import {Request, Response } from "express"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import { userInputSchema } from "../Types/User.types";
 
 import { User } from "../Schema/User.schema"
 
@@ -41,7 +42,16 @@ const getUserController=(req: Request, res: Response):void=>{
 
 const registerController=async(req:Request,res:Response)=>{
 
-     const {name,email,password}=req.body
+     
+
+
+     const result=userInputSchema.safeParse(req.body)
+
+     if(!result.success){
+      return   res.status(400).json({message:"user input is not  valid",errors: result.error.issues})
+     }
+
+     const {name,email,password}=result.data;
 
      console.log(name,email,password)  
 
