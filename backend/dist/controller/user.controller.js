@@ -17,7 +17,6 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_types_1 = require("../Types/User.types");
 const User_schema_1 = require("../Schema/User.schema");
-const secret = "djfo99349";
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const hashed = yield bcrypt_1.default.hash(password, 10);
     return hashed;
@@ -27,10 +26,12 @@ const comparePassword = (password, hash) => __awaiter(void 0, void 0, void 0, fu
     return isPasswordCorrect;
 });
 const token = (email) => {
-    return jsonwebtoken_1.default.sign({ email: email }, secret, { expiresIn: "24h" });
+    return jsonwebtoken_1.default.sign({ email: email }, process.env.SECRET, { expiresIn: "24h" });
 };
 const getUserController = (req, res) => {
-    res.send("user obtained");
+    var _a;
+    console.log("user", req.user);
+    res.send((_a = req.user) === null || _a === void 0 ? void 0 : _a.email);
 };
 exports.getUserController = getUserController;
 const registerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

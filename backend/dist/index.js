@@ -6,13 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const connectDb_1 = require("./db/connectDb");
 const user_controller_1 = require("./controller/user.controller");
+const auth_middleware_1 = require("./middleware/auth.middleware");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 (0, connectDb_1.connectDb)();
 app.get("/", (req, res) => {
     res.send("hello world");
 });
-app.get("/user", user_controller_1.getUserController);
+app.get("/user", auth_middleware_1.auth, user_controller_1.getUserController);
 app.post("/register", user_controller_1.registerController);
 app.post("/login", user_controller_1.loginController);
 app.listen(3000, () => {

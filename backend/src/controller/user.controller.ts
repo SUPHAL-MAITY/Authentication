@@ -4,8 +4,9 @@ import jwt from "jsonwebtoken"
 import { userInputSchema } from "../Types/User.types";
 
 import { User } from "../Schema/User.schema"
+import { customRequest } from "../Types/cusomTypes";
 
-const secret = "djfo99349"
+
 
 
 
@@ -26,13 +27,15 @@ const comparePassword=async(password:string,hash:string):Promise<boolean>=>{
 
 
 const token=(email:string):string=>{
-   return   jwt.sign({ email:email},secret,{expiresIn:"24h"})
+   return   jwt.sign({ email:email},process.env.SECRET!,{expiresIn:"24h"})
 }
 
 
-const getUserController=(req: Request, res: Response):void=>{
+const getUserController=(req: customRequest, res: Response):void=>{
 
-   res.send("user obtained")
+  console.log("user",req.user)
+
+   res.send(req.user?.email)
 
 }
 

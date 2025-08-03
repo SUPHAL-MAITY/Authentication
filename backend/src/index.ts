@@ -2,6 +2,7 @@
 import express from "express"
 import { connectDb } from "./db/connectDb"
 import { getUserController, loginController, registerController } from "./controller/user.controller";
+import { auth } from "./middleware/auth.middleware";
 
 
 
@@ -17,11 +18,14 @@ app.get("/",(req,res)=>{
     res.send("hello world")
 })
 
-app.get("/user",getUserController)
+app.get("/user",auth ,getUserController)
 
 
 app.post("/register",registerController)
 app.post("/login",loginController)
+
+
+
 
 
 app.listen(3000,()=>{
